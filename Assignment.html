@@ -1,0 +1,821 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Browser Tabs</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+#tabs {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#tabList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: #f4f4f4;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.tab {
+    display: inline-block;
+}
+
+.tabButton {
+    padding: 10px 20px;
+    background-color: #ddd;
+    border: none;
+    cursor: pointer;
+}
+
+.tabButton:hover {
+    background-color: #ccc;
+}
+
+#tabList li a {
+    text-decoration: none;
+    color: #333;
+}
+
+#tabList li a.active {
+    font-weight: bold;
+}
+
+#tabList li .closeTab {
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+#tabContent {
+    width: 100%;
+    height: calc(100% - 40px);
+    overflow: hidden;
+}
+
+.tabFrame {
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.tabFrame.active {
+    display: block;
+}
+
+.tabInput {
+    width: calc(100% - 40px);
+    padding: 5px;
+    margin: 10px 20px;
+}
+
+</style>
+</head>
+<body>
+<button id="newTab">New Tab</button>
+<div id="tabs">
+    <ul id="tabList">
+        <li class="tab">
+            <a href="#" class="tabButton active" data-url="https://example.com">Tab 1</a>
+            <span class="closeTab">×</span>
+            <div class="tabContent">
+                <input type="text" class="tabInput" value="https://example.com" placeholder="Enter URL">
+                <iframe src="https://example.com" frameborder="0" class="tabFrame active"></iframe>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+ $(document).ready(function() {
+    $("#tabList").on("click", "a", function(e) {
+        e.preventDefault();
+        var url = $(this).attr("data-url");
+        $(".tabFrame.active").removeClass("active").hide();
+        $(this).closest(".tab").find(".tabFrame").addClass("active").show().attr("src", url); // Update existing iframe src
+        $(this).addClass("active").closest(".tab").siblings().find("a").removeClass("active");
+    });
+
+    $("#tabList").on("click", ".closeTab", function() {
+        $(this).closest(".tab").remove();
+        var $activeTab = $("#tabList").find(".tabButton.active");
+        var $tabContent = $activeTab.closest(".tab").find(".tabContent");
+        if ($tabContent.length) {
+            var url = $activeTab.attr("data-url");
+            $tabContent.find(".tabFrame").attr("src", url);
+        }
+        $activeTab.addClass("active");
+    });
+
+    $("#newTab").on("click", function() {
+        var newTabIndex = $("#tabList li").length + 1;
+        var newTabName = "Tab " + newTabIndex;
+        var newTabUrl = "https://example.com"; // Change the URL to the default for new tabs
+        var newTab = '<li class="tab"><a href="#" class="tabButton active" data-url="' + newTabUrl + '">' + newTabName + '</a><span class="closeTab">×</span><div class="tabContent"><input type="text" class="tabInput" value="' + newTabUrl + '" placeholder="Enter URL"><iframe src="' + newTabUrl + '" frameborder="0" class="tabFrame active"></iframe></div></li>';
+        $("#tabList").append(newTab);
+        $("#tabList li a").removeClass("active").last().addClass("active");
+    });
+
+    $("#tabList").on("change", "input", function() {
+        var url = $(this).val();
+        var $activeTab = $(this).closest(".tab").find(".tabButton.active");
+        $activeTab.attr("data-url", url).trigger("click");
+    });
+
+    $("#tabList").on("keydown", "input", function(event) {
+        if (event.which === 13) { // Enter key
+            var url = $(this).val();
+            var $activeTab = $(this).closest(".tab").find(".tabButton.active");
+            $activeTab.attr("data-url", url).trigger("click");
+        }
+    });
+});
+
+</script>
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Browser Tabs</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+#tabs {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#tabList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: #f4f4f4;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.tab {
+    display: inline-block;
+    position: relative;
+}
+
+.tabButton {
+    padding: 10px 20px;
+    background-color: #ddd;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.tabButton:hover {
+    background-color: #ccc;
+}
+
+.tabButton.active {
+    font-weight: bold;
+}
+
+.tab .closeTab {
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.tabContent {
+    width: 100%;
+    height: calc(100% - 40px);
+    overflow: hidden;
+}
+
+.tabFrame {
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.tabFrame.active {
+    display: block;
+}
+
+.tabInput {
+    width: calc(100% - 40px); /* Adjust width */
+    padding: 5px;
+    margin-top: 10px;
+}
+
+</style>
+</head>
+<body>
+    <div id="tabs">
+    <button id="newTab">+</button>
+    <ul id="tabList">
+        <li class="tab">
+            <a href="#" class="tabButton active" data-url="https://example.com">Tab 1</a>
+            <span class="closeTab">×</span>
+            <input type="text" class="tabInput" value="https://example.com" placeholder="Enter URL">
+        </li>
+    </ul>
+    <div class="tabContent">
+        <iframe src="https://example.com" frameborder="0" class="tabFrame active"></iframe>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $("#tabList").on("click", ".tabButton", function(e) {
+        e.preventDefault();
+        var url = $(this).attr("data-url");
+        $(".tabFrame.active").attr("src", url);
+        $(this).addClass("active").closest("li").siblings().find(".tabButton").removeClass("active");
+    });
+
+    $("#tabList").on("click", ".closeTab", function() {
+        var $tab = $(this).parent();
+        var index = $tab.index();
+        $tab.remove();
+        $("#tabContent").find(".tabFrame").eq(index).remove();
+        var $tabs = $("#tabList").children(".tab");
+        if ($tabs.length === 0) {
+            $("#tabs").append('<div class="tabContent"></div>');
+        }
+        $("#tabList li:first-child .tabButton").addClass("active");
+        $("#tabContent").find(".tabFrame").eq(0).addClass("active").show();
+    });
+
+    $("#newTab").on("click", function() {
+        var newTabIndex = $("#tabList li").length + 1;
+        var newTabName = "Tab " + newTabIndex;
+        var newTabUrl = "https://example.com"; // Change the URL to the default for new tabs
+        var newTab = '<li class="tab"><a href="#" class="tabButton active" data-url="' + newTabUrl + '">' + newTabName + '</a><input type="text" class="tabInput" value="' + newTabUrl + '" placeholder="Enter URL"><span class="closeTab">×</span></li>';
+        $("#tabList").append(newTab);
+        $("#tabList li a").removeClass("active").last().addClass("active");
+    });
+
+    $("#tabList").on("change", ".tabInput", function() {
+        var url = $(this).val();
+        var index = $(this).closest("li").index();
+        $("#tabList li").eq(index).find("a").attr("data-url", url).trigger("click");
+    });
+
+    $("#tabList").on("click", ".tabSearchButton", function() {
+        var url = $(this).siblings(".tabInput").val();
+        var index = $(this).closest("li").index();
+        $("#tabList li").eq(index).find("a").attr("data-url", url).trigger("click");
+    });
+
+    $("#tabList").on("keydown", ".tabInput", function(event) {
+        if (event.which === 13) { // Enter key
+            var url = $(this).val();
+            var index = $(this).closest("li").index();
+            $("#tabList li").eq(index).find("a").attr("data-url", url).trigger("click");
+        }
+    });
+});
+
+</script>
+</body>
+</html>
+
+<!--//NO JQUERY Version <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Browser</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  .tab {
+    display: none;
+    border: 1px solid #ccc;
+    border-top: none;
+    padding: 20px;
+    position: relative;
+  }
+  .tab.active {
+    display: block;
+  }
+  .tab-header {
+    overflow: hidden;
+    border-bottom: 1px solid #ccc;
+  }
+  .tab-header button {
+    background-color: #f2f2f2;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    float: left;
+    transition: background-color 0.3s;
+  }
+  .tab-header button:hover {
+    background-color: #ddd;
+  }
+  .address-bar {
+    margin: 10px;
+  }
+  .address-bar input[type="text"] {
+    width: 80%;
+    padding: 8px;
+    font-size: 16px;
+  }
+  .address-bar button {
+    padding: 8px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .iframe-container {
+    margin: 10px;
+  }
+  .iframe-container iframe {
+    width: 100%;
+    height: 400px;
+    border: 1px solid #ccc;
+  }
+  .close-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+  }
+</style>
+</head>
+<body>
+
+<div class="address-bar">
+  <input type="text" id="urlInput" placeholder="Enter URL">
+  <button onclick="loadURL()">Go</button>
+</div>
+
+<div class="tab-header" id="tabHeader">
+  <button class="tablink" onclick="openTab()">+</button>
+</div>
+
+<div class="iframe-container">
+  <iframe id="mainFrame"></iframe>
+</div>
+
+<script>
+  let tabCounter = 1;
+
+  function openTab() {
+    const tabHeader = document.getElementById("tabHeader");
+    const newTabButton = document.createElement("button");
+    newTabButton.classList.add("tablink");
+    newTabButton.textContent = "Tab " + tabCounter;
+    newTabButton.addEventListener("click", function() {
+      switchTab(this);
+    });
+   // tabHeader.insertBefore(newTabButton, tabHeader.lastChild);
+   const closeBtn = document.createElement("button");
+   closeBtn.textContent = "X";
+   closeBtn.classList.add("close-button");
+   newTabButton.appendChild(closeBtn);
+   tabHeader.appendChild(newTabButton);
+   closeBtn.addEventListener("click", function(event) {
+     closeTab(event);
+    });
+    const newTabContent = document.createElement("div");
+    newTabContent.classList.add("tab");
+    newTabContent.setAttribute("id", "Tab" + tabCounter);
+    const iframe = document.createElement("iframe");
+    iframe.setAttribute("id", "iframe" + tabCounter);
+    iframe.setAttribute("sandbox", "allow-scripts allow-same-origin");
+    newTabContent.appendChild(iframe);
+    document.body.insertBefore(newTabContent, document.querySelector(".iframe-container"));
+    switchTab(newTabButton);
+    tabCounter++;
+}
+
+function closeTab(event) {
+    const tabButton = event.target.parentNode;
+    if (tabButton.classList.contains("active")) {
+      const prevTab = tabButton.previousElementSibling || tabButton.nextElementSibling;
+      if (prevTab) {
+        switchTab(prevTab);
+      } else {
+          document.getElementById("mainFrame").src = "";
+        }
+    }
+    tabButton.parentNode.removeChild(tabButton);
+  }
+
+  function switchTab(tabButton) {
+      console.log(tabButton);
+    const tabName = tabButton.textContent;
+    const tabcontent = document.getElementsByClassName("tab");
+    for (let i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    const tabs = document.getElementsByClassName("tablink");
+    for (let i = 0; i < tabs.length; i++) {
+        tabs[i].classList.remove("active");
+    }
+    document.getElementById.display = "block";
+    tabButton.classList.add("active");
+  }
+
+  function loadURL() {
+    const url = document.getElementById("urlInput").value;
+    document.getElementById("mainFrame").src = url;
+  }
+</script>
+
+</body>
+</html> -->
+
+<!-- //
+    //MY version
+    
+    <html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  .tab {
+    display: none;
+    border: 1px solid #ccc;
+    border-top: none;
+    padding: 20px;
+    position: relative;
+  }
+  .tab.active {
+    display: block;
+  }
+  .tab-header {
+    overflow: hidden;
+    border-bottom: 1px solid #ccc;
+  }
+  .tab-header button {
+    background-color: #f2f2f2;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    float: left;
+    transition: background-color 0.3s;
+  }
+  .tab-header button:hover {
+    background-color: #ddd;
+  }
+  .address-bar {
+    margin: 10px;
+  }
+  .address-bar input[type="text"] {
+    width: 80%;
+    padding: 8px;
+    font-size: 16px;
+  }
+  .address-bar button {
+    padding: 8px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .iframe-container {
+    margin: 10px;
+  }
+  .iframe-container iframe {
+    width: 100%;
+    height: 400px;
+    border: 1px solid #ccc;
+  }
+  .close-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+  }
+</style>
+<body>
+    <div class="address-bar">
+        <input type="text" id="urlInput" placeholder="Enter URL">
+        <button onclick="loadURL()">Go</button>
+      </div>
+      <div class="tab-header" id="tabHeader">
+        <button class="tablink" onclick="openTab()">+</button>
+    </div>
+    <div class="tabHolder">
+        <div class="tab" id="tab">
+            <div class="iframe-container">
+              <iframe id="mainFrame"></iframe>
+            </div>
+        </div>
+    </div>
+      <script>
+        var tabCounter=1;
+function openTab() {
+    var head = document.getElementById("tabHeader");
+   var newTabHead = document.createElement("button");
+   var closer = document.createElement("button");
+   newTabHead.classList.add("tablink");
+   closer.textContent="x";
+   closer.addEventListener("click",function(){
+    closeTab(this);
+   })
+   newTabHead.textContent= "Tab"+tabCounter;
+   newTabHead.appendChild(closer);
+   head.appendChild(newTabHead);
+   newTabHead.addEventListener("click", function() {
+      switchTab(this);
+    });
+    // var holder = document.createElement("div");
+    // var newTab = document.createElement("div");
+    // holder.classList.add("tab");
+    var iframe = document.createElement("iframe");
+    iframe.setAttribute("id", "iframe" + tabCounter);
+    iframe.setAttribute("sandbox", "allow-scripts allow-same-origin");
+    iframe.classList.add("iframe-container");
+    newTab.appendChild(iframe);
+    //holder.appendChild(newTab);
+    //head.appendChild(newTab);
+//    document.body.insert(newTab, document.querySelector(".iframe-container"));
+    console.log(iframe);
+   tabCounter++;
+
+  }
+  function closeTab(t) {
+    console.log("Here I am");
+    console.log();
+    // const tabButton = event.target.parentNode;
+    // console.log(event);
+    // if (tabButton.classList.contains("active")) {
+    //   const prevTab = tabButton.previousElementSibling || tabButton.nextElementSibling;
+    //   if (prevTab) {
+    //     switchTab(prevTab);
+    //   } else {
+    //     document.getElementById("mainFrame").src = "";
+    //   }
+    // }
+    t.parentNode.removeChild(t);
+  }
+  function switchTab(tabButton) {
+    const tabName = tabButton.textContent;
+    const tabcontent = document.getElementsByClassName("tab");
+    for (let i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    const tabs = document.getElementsByClassName("tablink");
+    for (let i = 0; i < tabs.length; i++) {
+      tabs[i].classList.remove("active");
+    }
+    console.log("Selected tab",tabButton);
+   // document.getElementById("Tab" + tabName).style.display = "block";
+    tabButton.classList.add("active");
+  }
+
+      </script>
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Browser</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      .tab {
+        display: none;
+        border: 1px solid #ccc;
+        border-top: none;
+        padding: 20px;
+      }
+      .tab.active {
+        display: block;
+      }
+      .tab-header {
+        overflow: hidden;
+        border-bottom: 1px solid #ccc;
+      }
+      .tab-header button {
+        background-color: #f2f2f2;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 10px 20px;
+        float: left;
+        transition: background-color 0.3s;
+      }
+      .tab-header button:hover {
+        background-color: #ddd;
+      }
+      .address-bar {
+        margin: 10px;
+      }
+      .address-bar input[type="text"] {
+        width: 80%;
+        padding: 8px;
+        font-size: 16px;
+      }
+      .address-bar button {
+        padding: 8px 20px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      .iframe-container {
+        margin: 10px;
+      }
+      .iframe-container iframe {
+        width: 100%;
+        height: 400px;
+        border: 1px solid #ccc;
+      }
+    </style>
+    </head>
+    <body>
+    
+    <div class="address-bar">
+      <input type="text" id="urlInput" placeholder="Enter URL">
+      <button onclick="loadURL()">Go</button>
+    </div>
+    
+    <div class="tab-header">
+      <button class="tablink" onclick="openTab(event, 'Tab1')">Tab 1</button>
+      <button class="tablink" onclick="openTab(event, 'Tab2')">Tab 2</button>
+      <button class="tablink" onclick="openTab(event, 'Tab3')">Tab 3</button>
+    </div>
+    
+    <div id="Tab1" class="tab active">
+      <div class="iframe-container">
+        <iframe id="iframe1"></iframe>
+      </div>
+    </div>
+    
+    <div id="Tab2" class="tab">
+      <div class="iframe-container">
+        <iframe id="iframe2"></iframe>
+      </div>
+    </div>
+    
+    <div id="Tab3" class="tab">
+      <div class="iframe-container">
+        <iframe id="iframe3"></iframe>
+      </div>
+    </div>
+    
+    <script>
+      function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+      }
+    
+      function loadURL() {
+        var url = document.getElementById("urlInput").value;
+        var activeTab = document.querySelector(".tab.active");
+        var iframe = activeTab.querySelector("iframe");
+        iframe.src = url;
+      }
+    </script>
+    
+    </body>
+    </html>
+     -->
